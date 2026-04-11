@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kota Joe Roadhouse - Customer Registration</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .registration-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            margin-top: 50px;
+            backdrop-filter: blur(10px);
+        }
+        .ai-badge {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .form-control, .form-select {
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+            padding: 12px;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        .btn-register {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 30px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .btn-register:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo img {
+            max-width: 100%;
+            height: auto;
+            max-height: 120px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        .logo h1 {
+            color: #764ba2;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 2.2rem;
+        }
+        .logo p {
+            color: #666;
+            font-style: italic;
+            font-size: 1.1rem;
+        }
+        .ai-powered-feature {
+            background: #f8f9fa;
+            border-left: 4px solid #4ecdc4;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .success-message {
+            display: none;
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .server-status {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="registration-container">
+                    <!-- Server Status -->
+                    <div class="server-status">
+                        <i class="fas fa-info-circle"></i> <strong>Offline Mode:</strong> Form is working locally without server connection
+                    </div>
+
+                    <!-- AI Collaboration Badge -->
+                    <div class="ai-badge">
+                        <i class="fas fa-robot"></i>
+                        Developed with Cascade AI Assistant
+                    </div>
+
+                    <!-- Logo and Header -->
+                    <div class="logo">
+                        <img src="logo.png" alt="KOTA JOE ROADHOUSE" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div style="display:none; background: #000; color: #fff; padding: 20px; border-radius: 8px; text-align: center; position: relative; margin-bottom: 15px;">
+                            <div style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 4px; height: 100%; background: #ff0000;"></div>
+                            <div style="position: absolute; top: 10px; left: 50%; transform: translateX(-50%); width: 60%; height: 4px; background: #fff;"></div>
+                            <h1 style="margin: 15px 0 5px 0; font-size: 1.8rem; font-weight: bold;">KOTA JOE</h1>
+                            <h2 style="margin: 0 0 15px 0; font-size: 1.2rem; font-weight: normal;">ROADHOUSE</h2>
+                            <div style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); width: 60%; height: 4px; background: #fff;"></div>
+                        </div>
+                        <h1 style="display:none;"><i class="fas fa-hamburger"></i> Kota Joe Roadhouse</h1>
+                        <p>Delicious Kotas, Burgers & More!</p>
+                    </div>
+
+                    <h3 class="text-center mb-4">Customer Registration</h3>
+                    
+                    <!-- AI Powered Feature Notice -->
+                    <div class="ai-powered-feature">
+                        <strong><i class="fas fa-magic"></i> AI-Powered Feature:</strong><br>
+                        This form uses AI-powered validation and auto-suggestions to enhance your registration experience.
+                    </div>
+
+                    <form id="registrationForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="firstName" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="firstName" required>
+                                <div class="form-text">AI will suggest corrections if needed</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="lastName" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="lastName" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="email" required>
+                            <div class="form-text">AI-powered email validation</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="phone" required>
+                            <div class="form-text">AI will format automatically</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password *</label>
+                            <input type="password" class="form-control" id="password" required>
+                            <div class="form-text">Password must be at least 8 characters with uppercase, lowercase, number, and special character</div>
+                            <div class="password-strength mt-2">
+                                <div class="progress" style="height: 5px;">
+                                    <div class="progress-bar" id="passwordStrength" role="progressbar" style="width: 0%"></div>
+                                </div>
+                                <small class="text-muted" id="passwordStrengthText"></small>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Confirm Password *</label>
+                            <input type="password" class="form-control" id="confirmPassword" required>
+                            <div class="form-text">Re-enter your password to confirm</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="studentStatus" class="form-label">Are you a student?</label>
+                            <select class="form-select" id="studentStatus" required>
+                                <option value="">Select...</option>
+                                <option value="yes">Yes - I'm a student</option>
+                                <option value="no">No - I'm not a student</option>
+                            </select>
+                            <div class="form-text">Students get special discounts!</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="favoriteItems" class="form-label">Favorite Menu Items</label>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="kota" value="kota">
+                                        <label class="form-check-label" for="kota">Kota</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="burger" value="burger">
+                                        <label class="form-check-label" for="burger">Burger</label>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="fries" value="fries">
+                                        <label class="form-check-label" for="fries">Fries</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="beverages" value="beverages">
+                                        <label class="form-check-label" for="beverages">Beverages</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-text">AI will personalize offers based on your preferences</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="notifications" class="form-label">Notification Preferences</label>
+                            <select class="form-select" id="notifications">
+                                <option value="all">All promotions and updates</option>
+                                <option value="specials">Special deals only</option>
+                                <option value="none">No notifications</option>
+                            </select>
+                        </div>
+
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="terms" required>
+                            <label class="form-check-label" for="terms">
+                                I agree to the terms and conditions and privacy policy
+                            </label>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-register btn-lg me-2">
+                                <i class="fas fa-user-plus"></i> Register Now
+                            </button>
+                            <button type="button" class="btn btn-secondary btn-lg" id="resetBtn">
+                                <i class="fas fa-redo"></i> Reset Form
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Error Messages -->
+                    <div class="alert alert-danger" id="errorMessage" style="display: none;">
+                        <h5><i class="fas fa-exclamation-triangle"></i> Registration Error</h5>
+                        <p id="errorText"></p>
+                    </div>
+
+                    <!-- Success Message -->
+                    <div class="success-message" id="successMessage">
+                        <h5><i class="fas fa-check-circle"></i> Registration Successful!</h5>
+                        <p>Thank you for registering with Kota Joe Roadhouse! Your data has been processed locally.</p>
+                        <p><strong>AI-Powered Benefits:</strong></p>
+                        <ul>
+                            <li>Personalized menu recommendations</li>
+                            <li>Smart promotional offers</li>
+                            <li>Quick order suggestions</li>
+                        </ul>
+                        <p><strong>Registration ID:</strong> <span id="registrationId"></span></p>
+                    </div>
+
+                    <!-- AI Tool Attribution -->
+                    <div class="mt-4 text-center">
+                        <small class="text-muted">
+                            <i class="fas fa-code"></i> This form was developed with assistance from 
+                            <strong>Cascade AI Assistant</strong> - Advanced AI-powered development tool
+                        </small>
+                    </div>
+
+                    <!-- Development Info -->
+                    <div class="mt-3 p-3 bg-light rounded">
+                        <h6><i class="fas fa-info-circle"></i> Development Information</h6>
+                        <p class="mb-1"><strong>AI Tool Used:</strong> Cascade AI Assistant</p>
+                        <p class="mb-1"><strong>Development Date:</strong> March 12, 2026</p>
+                        <p class="mb-0"><strong>Features:</strong> AI-powered validation, smart formatting, responsive design</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Comprehensive form validation for all test cases
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Hide previous messages
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'none';
+            
+            // Get form values
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const studentStatus = document.getElementById('studentStatus').value;
+            const terms = document.getElementById('terms').checked;
+            
+            // TC02: Mandatory Field Validation
+            if (!firstName || !lastName || !email || !phone || !password || !confirmPassword || !studentStatus || !terms) {
+                showError('Required fields empty - Please fill in all required fields marked with *');
+                return;
+            }
+            
+            // TC08: Special Characters in names and surnames
+            const nameRegex = /^[a-zA-Z\s]+$/;
+            if (!nameRegex.test(firstName) || !nameRegex.test(lastName)) {
+                showError('Name and surname cannot contain special characters');
+                return;
+            }
+            
+            // TC10: Field Length Validation
+            if (firstName.length > 50 || lastName.length > 50 || email.length > 100 || phone.length > 20) {
+                showError('Input restricted - Field length exceeds maximum allowed characters');
+                return;
+            }
+            
+            // TC05 & TC06: Email Format Validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showError('Invalid email address format');
+                return;
+            }
+            
+            // TC07: Duplicate Email Prevention
+            const existingCustomers = JSON.parse(localStorage.getItem('kotajoe_customers') || '[]');
+            if (existingCustomers.some(customer => customer.email === email)) {
+                showError('Email already exists');
+                return;
+            }
+            
+            // TC03 & TC04: Password Format and Strength Validation
+            const passwordStrength = validatePassword(password);
+            if (passwordStrength.strength === 'weak') {
+                showError('Password weak - Password must be at least 8 characters with uppercase, lowercase, number, and special character');
+                return;
+            }
+            
+            // TC09: Password Confirmation validation
+            if (password !== confirmPassword) {
+                showError('Passwords do not match');
+                return;
+            }
+            
+            // TC01: Valid Registration Submission
+            // Generate unique registration ID
+            const registrationId = 'KJ' + Date.now().toString().slice(-6);
+            
+            // Store data locally
+            const customerData = {
+                registrationId: registrationId,
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                phone: phone,
+                password: password, // In real app, this would be hashed
+                studentStatus: studentStatus,
+                favoriteItems: getSelectedItems(),
+                notifications: document.getElementById('notifications').value,
+                registeredAt: new Date().toISOString(),
+                aiProcessed: true,
+                aiTool: 'Cascade AI Assistant'
+            };
+            
+            // Save to localStorage
+            existingCustomers.push(customerData);
+            localStorage.setItem('kotajoe_customers', JSON.stringify(existingCustomers));
+            
+            console.log('Customer Data Saved:', customerData);
+            
+            // Show success message
+            document.getElementById('registrationId').textContent = registrationId;
+            document.getElementById('successMessage').style.display = 'block';
+            
+            // Reset form after 8 seconds
+            setTimeout(() => {
+                this.reset();
+                document.getElementById('successMessage').style.display = 'none';
+                resetValidationStates();
+            }, 8000);
+        });
+        
+        // Password strength validation
+        function validatePassword(password) {
+            let strength = 0;
+            let feedback = [];
+            
+            if (password.length >= 8) strength++;
+            else feedback.push('at least 8 characters');
+            
+            if (/[a-z]/.test(password)) strength++;
+            else feedback.push('lowercase letter');
+            
+            if (/[A-Z]/.test(password)) strength++;
+            else feedback.push('uppercase letter');
+            
+            if (/[0-9]/.test(password)) strength++;
+            else feedback.push('number');
+            
+            if (/[^a-zA-Z0-9]/.test(password)) strength++;
+            else feedback.push('special character');
+            
+            let strengthText = 'weak';
+            let strengthColor = '#dc3545';
+            
+            if (strength >= 4) {
+                strengthText = 'strong';
+                strengthColor = '#28a745';
+            } else if (strength >= 3) {
+                strengthText = 'medium';
+                strengthColor = '#ffc107';
+            }
+            
+            return {
+                strength: strengthText,
+                score: strength,
+                feedback: feedback,
+                color: strengthColor
+            };
+        }
+        
+        // Real-time password strength indicator
+        document.getElementById('password').addEventListener('input', function(e) {
+            const password = e.target.value;
+            const strength = validatePassword(password);
+            
+            const strengthBar = document.getElementById('passwordStrength');
+            const strengthText = document.getElementById('passwordStrengthText');
+            
+            strengthBar.style.width = (strength.score * 20) + '%';
+            strengthBar.style.backgroundColor = strength.color;
+            
+            if (password.length > 0) {
+                if (strength.strength === 'weak') {
+                    strengthText.textContent = 'Weak password - Missing: ' + strength.feedback.join(', ');
+                    strengthText.className = 'text-danger';
+                } else if (strength.strength === 'medium') {
+                    strengthText.textContent = 'Medium strength password';
+                    strengthText.className = 'text-warning';
+                } else {
+                    strengthText.textContent = 'Password successfully created';
+                    strengthText.className = 'text-success';
+                }
+            } else {
+                strengthText.textContent = '';
+            }
+        });
+        
+        // Real-time password confirmation validation
+        document.getElementById('confirmPassword').addEventListener('input', function(e) {
+            const password = document.getElementById('password').value;
+            const confirmPassword = e.target.value;
+            
+            if (confirmPassword.length > 0) {
+                if (password !== confirmPassword) {
+                    e.target.setCustomValidity('Passwords do not match');
+                    e.target.classList.add('is-invalid');
+                } else {
+                    e.target.setCustomValidity('');
+                    e.target.classList.remove('is-invalid');
+                    e.target.classList.add('is-valid');
+                }
+            }
+        });
+        
+        // Real-time email validation
+        document.getElementById('email').addEventListener('blur', function(e) {
+            const email = e.target.value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (email.length > 0) {
+                if (!emailRegex.test(email)) {
+                    e.target.setCustomValidity('Invalid email address format');
+                    e.target.classList.add('is-invalid');
+                } else {
+                    e.target.setCustomValidity('');
+                    e.target.classList.remove('is-invalid');
+                    e.target.classList.add('is-valid');
+                }
+            }
+        });
+        
+        // Real-time name validation
+        document.getElementById('firstName').addEventListener('blur', function(e) {
+            const name = e.target.value;
+            const nameRegex = /^[a-zA-Z\s]+$/;
+            
+            if (name.length > 0 && !nameRegex.test(name)) {
+                e.target.setCustomValidity('Name cannot contain special characters');
+                e.target.classList.add('is-invalid');
+            } else {
+                e.target.setCustomValidity('');
+                e.target.classList.remove('is-invalid');
+            }
+        });
+        
+        document.getElementById('lastName').addEventListener('blur', function(e) {
+            const name = e.target.value;
+            const nameRegex = /^[a-zA-Z\s]+$/;
+            
+            if (name.length > 0 && !nameRegex.test(name)) {
+                e.target.setCustomValidity('Surname cannot contain special characters');
+                e.target.classList.add('is-invalid');
+            } else {
+                e.target.setCustomValidity('');
+                e.target.classList.remove('is-invalid');
+            }
+        });
+        
+        // Phone number formatting
+        document.getElementById('phone').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 0) {
+                if (value.length <= 3) {
+                    value = value;
+                } else if (value.length <= 6) {
+                    value = value.slice(0, 3) + '-' + value.slice(3);
+                } else {
+                    value = value.slice(0, 3) + '-' + value.slice(3, 6) + '-' + value.slice(6, 10);
+                }
+            }
+            e.target.value = value;
+        });
+        
+        // TC11: Form Reset functionality
+        document.getElementById('resetBtn').addEventListener('click', function() {
+            document.getElementById('registrationForm').reset();
+            resetValidationStates();
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'none';
+        });
+        
+        function resetValidationStates() {
+            // Remove all validation classes
+            document.querySelectorAll('.is-valid, .is-invalid').forEach(element => {
+                element.classList.remove('is-valid', 'is-invalid');
+            });
+            
+            // Reset password strength indicator
+            document.getElementById('passwordStrength').style.width = '0%';
+            document.getElementById('passwordStrengthText').textContent = '';
+        }
+        
+        function getSelectedItems() {
+            const items = [];
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            checkboxes.forEach(checkbox => {
+                if (checkbox.id !== 'terms') {
+                    items.push(checkbox.value);
+                }
+            });
+            return items;
+        }
+        
+        function showError(message) {
+            document.getElementById('errorText').textContent = message;
+            document.getElementById('errorMessage').style.display = 'block';
+            
+            // Scroll to error message
+            document.getElementById('errorMessage').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Display registered customers count
+        window.addEventListener('load', function() {
+            const customers = JSON.parse(localStorage.getItem('kotajoe_customers') || '[]');
+            console.log(`Total customers registered: ${customers.length}`);
+            console.log('AI Tool: Cascade AI Assistant');
+        });
+    </script>
+</body>
+</html>

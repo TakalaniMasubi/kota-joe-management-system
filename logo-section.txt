@@ -1,0 +1,13 @@
+<!-- Logo and Header -->
+                    <div class="logo">
+                        <img src="logo.png" alt="KOTA JOE ROADHOUSE" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div style="display:none; background: #000; color: #fff; padding: 20px; border-radius: 8px; text-align: center; position: relative;">
+                            <div style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 4px; height: 100%; background: #ff0000;"></div>
+                            <div style="position: absolute; top: 10px; left: 50%; transform: translateX(-50%); width: 60%; height: 4px; background: #fff;"></div>
+                            <h1 style="margin: 15px 0 5px 0; font-size: 1.8rem; font-weight: bold;">KOTA JOE</h1>
+                            <h2 style="margin: 0 0 15px 0; font-size: 1.2rem; font-weight: normal;">ROADHOUSE</h2>
+                            <div style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); width: 60%; height: 4px; background: #fff;"></div>
+                        </div>
+                        <h1 style="display:none;"><i class="fas fa-hamburger"></i> Kota Joe Roadhouse</h1>
+                        <p>Delicious Kotas, Burgers & More!</p>
+                    </div>
