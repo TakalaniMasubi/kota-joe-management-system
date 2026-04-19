@@ -13,15 +13,10 @@
     },
     {
       "src": "/(.*)",
-      "dest": "server.js"
+      "dest": "/$1"
     }
   ],
   "env": {
     "NODE_ENV": "production"
-  },
-  "functions": {
-    "server.js": {
-      "includeFiles": "routes/**"
-    }
   }
 }
