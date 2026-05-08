@@ -57,7 +57,11 @@ app.get('/api', (req, res) => {
     });
 });
 
-// Note: Vercel automatically serves static files from root directory
+// Serve static files and index.html for root route
+app.use(express.static(__dirname));
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
 
 // AI-powered error handling middleware
 app.use((err, req, res, next) => {
